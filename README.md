@@ -1,21 +1,14 @@
 # cpp-sandbox
 A C++ sandbox
 
-## Setup
-```bash
-$ chmod +x ./scripts/*.sh
-$ ./sripts/setup.sh
-```
-
 ## Compiling Program
 ```bash
-$ make
+# setup and compile project
+$ make build
+
+# run the project
+$ make run
 ```
 
 ## Running Program
 The compiled program is placed in ```./bin/``` directory.
-
-## Cleaning Up
-```bash
-$ ./scripts/clean.sh
-```
