@@ -5,23 +5,29 @@ SRC_DIR =./src
 SRC = $(wildcard ${SRC_DIR}/*.cpp)
 OUT_DIR = bin
 OBJ = ${SRC:.cpp=.o}
-LIBS = -lm -lraylib
-CFLAGS = -Wextra -Werror -Wall -std=c++20 -O3
+LIBS = -lm
+CFLAGS = -Wextra -Werror -Wall -Wpedantic -std=c++20 -O3
 BINARY = ${OUT_DIR}/${PROJECT}
 
 main: ${OBJ}
 	${CC} -o ${BINARY} ${OUT_DIR}/*.o ${LIBS}
 
 .cpp.o:
+	@mkdir -p ./${OUT_DIR}
 	${CC} -c ${CFLAGS} $<
 	@mv ./*.o ${OUT_DIR}/
 
 run:
 	@${BINARY}
 
+fmt:
+	@clang-format -i -style=Chromium ${SRC_DIR}/*.cpp
+	@if [ -z ${SRC_DIR}/*.hpp ]; then clang-format -i -style=Chromium ${SRC_DIR}/*.hpp; fi
+
 build:
-	@bear -- make
+	@bear -- make main
 
 clean:
-	@rm -v ./compile_commands.json
-	@rm -v ${OUT_DIR}/*.o ${BINARY}
+	@rm -v ${OUT_DIR}/*.o 2> /dev/null
+	@rm -v ${BINARY} 2> /dev/null
+	@rm -vf ./compile_commands.json 2> /dev/null
